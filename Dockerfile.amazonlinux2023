@@ -1,0 +1,21 @@
+FROM amazonlinux:2023
+
+RUN dnf update -y
+RUN dnf groupinstall -y "Development Tools"
+RUN dnf install -y \
+    openssl-devel ncurses-devel libtirpc-devel \
+    rpcgen krb5-devel libudev-devel libcurl-devel \
+    libtirpc-devel libfido2-devel \
+    cyrus-sasl-devel libaio-devel numactl-devel openldap-devel \
+    perl "perl(English)" "perl(JSON)" "perl(Memoize)" "perl(Sys::Hostname)" "perl(Time::HiRes)" "perl(Time::localtime)" \
+    time \
+    rpm-build cmake "dnf-command(download)"
+
+WORKDIR "/tmp/"
+
+# ref. https://blogs.oracle.com/mysql/post/build-mysql-8-from-the-source-rpm-in-ol9
+RUN dnf install -y https://dev.mysql.com/get/mysql80-community-release-el9-5.noarch.rpm
+RUN dnf download --source mysql-community-server
+RUN rpmbuild --rebuild mysql-community-*.src.rpm
+
+CMD cp -r /root/rpmbuild/RPMS /output/
