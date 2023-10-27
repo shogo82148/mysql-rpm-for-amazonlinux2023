@@ -69,6 +69,7 @@
 %{?el7:                          %global systemd 1}
 %{?el8:                          %global systemd 1}
 %{?el9:                          %global systemd 1}
+%{?amzn2023:                     %global systemd 1}
 
 %if 0%{?rhel} >= 8
 %global add_fido_plugins 1
