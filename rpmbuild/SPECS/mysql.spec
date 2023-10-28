@@ -77,6 +77,10 @@
 %global add_fido_plugins 0
 %endif # rhel8 or above
 
+%if 0%{?amzn} >= 2023
+%global add_fido_plugins 1
+%endif # amzn2023 or above
+
 # Two workarounds on el6 and el7
 %if 0%{?rhel} == 6 || 0%{?rhel} == 7
 # - Avoid compiling Python 3 code with Python 2
